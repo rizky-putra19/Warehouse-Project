@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   dataStockIns.init({
     itemId: DataTypes.INTEGER,
-    date: DataTypes.DATE,
+    date: DataTypes.DATEONLY,
     qty: DataTypes.INTEGER
   }, {
     sequelize,

@@ -12,12 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       items.hasMany(models.dataStockIns, {as: 'datastockins', foreignKey: 'itemId'});
       items.hasMany(models.dataStockOuts, {as: 'datastockouts', foreignKey: 'itemId'});
-      items.belongsTo(models.categories, {as: 'items', foreignKey: 'categoryId'});
+      items.belongsTo(models.categories, {as: 'itemscategory', foreignKey: 'categoryId'});
     }
   };
   items.init({
     name: DataTypes.STRING,
-    photoProduct: DataTypes.STRING,
     price: DataTypes.INTEGER,
     stock: DataTypes.INTEGER,
     categoryId: DataTypes.INTEGER

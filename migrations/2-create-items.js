@@ -11,15 +11,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      photoProduct: {
-        type: Sequelize.STRING,
-        defaultValue: 'https://res.cloudinary.com/dejongos/image/upload/v1637437182/cover/cat6_prod3-500x500_yp2mg3.jpg',
-      },
       price: {
         type: Sequelize.INTEGER
       },
       stock: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       categoryId: {
         type: Sequelize.INTEGER,

@@ -18,7 +18,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       qty: {
         type: Sequelize.INTEGER
