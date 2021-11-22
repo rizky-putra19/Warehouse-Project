@@ -442,11 +442,34 @@ module.exports = {
                 itemStockOut: getAllItemOut,
             })
         } catch (error) {
-            console.log("🚀 ~ file: itemsControllers.js ~ line 443 ~ getAllDataInAndOut: ~ error", error)
             return res.status(500).json({
                 status: 'failed',
                 message: 'Internal Server Error',
             });
         }
     },
+
+    getAllItem: async (req, res) => {
+        try{
+            const allItem = await items.findAll()
+
+            if (!allItem) {
+                return res.status(400).json({
+                    status: 'failed',
+                    message: 'data not found',
+                })
+            };
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'success retrieved data',
+                data: allItem,
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 'failed',
+                message: 'Internal Server Error',
+            });
+        }
+    }
 }

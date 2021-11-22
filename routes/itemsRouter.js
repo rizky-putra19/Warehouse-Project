@@ -9,5 +9,6 @@ router.get('/', loginCheck, controlItem.getItemByName);
 router.get('/price', loginCheck, controlItem.getItemByRangePrice);
 router.put('/update-item/:id', loginCheck, controlItem.updateItem);
 router.get('/get-all-stock-in-and-out', loginCheck, controlItem.getAllDataInAndOut);
+router.get('/all-item', loginCheck, controlItem.getAllItem);
 
 module.exports = router;
