@@ -203,7 +203,9 @@ module.exports = {
             }
 
             const findItem = await items.findOne({
-                name: query.name
+                where: {
+                    name: query.name
+                }
             })
 
             if (!findItem) {
