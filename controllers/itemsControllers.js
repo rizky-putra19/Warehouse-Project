@@ -1,5 +1,5 @@
-const { items, categories, dataStockIns } = require('../models');
-const Joi = require('joi');
+const { items, categories, dataStockIns, dataStockOuts } = require('../models');
+const Joi = require('joi').extend(require('@joi/date'));
 const moment = require('moment');
 const { Op } = require('sequelize')
 
@@ -352,7 +352,101 @@ module.exports = {
         }
     },
 
-    getAllDataInAndOut: async(req, res) => {
-        
-    }
+    getAllDataInAndOut: async (req, res) => {
+        const query = req.query;
+
+        try {
+            const schema = Joi.object({
+                minDate: Joi.date().format('YYYY-MM-DD'),
+                maxDate: Joi.date().format('YYYY-MM-DD'),
+            });
+
+            const check = schema.validate({
+                minDate: query.minDate,
+                maxDate: query.maxDate,
+            }, { abortEarly: false });
+
+            if (check.error) {
+                return res.status(400).json({
+                    status: 'failed',
+                    message: 'bad request',
+                    errors: check.error['details'].map(
+                        ({ message }) => message
+                    ),
+                }); 
+            };
+
+            const getAllItemIn = await items.findAll({
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                include: [
+                    {
+                        model: dataStockIns,
+                        as: 'datastockins',
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt']
+                        },
+                        where: {
+                            date: {
+                                [Op.gte]: query.minDate,
+                                [Op.lte]: query.maxDate, 
+                            }
+                        }
+                    },
+                    {
+                        model: categories,
+                        as: 'itemscategory',
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt']
+                        },
+                    }
+                ]
+            });
+
+            const getAllItemOut = await items.findAll({
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                include: [
+                    {
+                        model: dataStockOuts,
+                        as: 'datastockouts',
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt']
+                        },
+                        where: {
+                            date: {
+                                [Op.gte]: query.minDate,
+                                [Op.lte]: query.maxDate, 
+                            }
+                        }
+                    },
+                    {
+                        model: categories,
+                        as: 'itemscategory',
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt']
+                        },
+                    }
+                ]
+            });
+
+            if (!getAllItemIn || !getAllItemOut) {
+                return res.status(400).json({
+                    status: 'failed',
+                    message: 'data not found',
+                })
+            };
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'success retrieved data',
+                itemStockIn: getAllItemIn,
+                itemStockOut: getAllItemOut,
+            })
+        } catch (error) {
+            console.log("🚀 ~ file: itemsControllers.js ~ line 443 ~ getAllDataInAndOut: ~ error", error)
+            return res.status(500).json({
+                status: 'failed',
+                message: 'Internal Server Error',
+            });
+        }
+    },
 }

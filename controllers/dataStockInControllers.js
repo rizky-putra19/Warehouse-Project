@@ -116,7 +116,7 @@ module.exports = {
 
             const check = schema.validate({
                 date: body.date
-            }, { aboartEarly: false });
+            }, { abortEarly: false });
 
             if (check.error) {
                 return res.status(400).json({
@@ -177,7 +177,7 @@ module.exports = {
             const check = schema.validate({
                 minDate: query.minDate,
                 maxDate: query.maxDate,
-            }, { aboartEarly: false });
+            }, { abortEarly: false });
 
             if (check.error) {
                 return res.status(400).json({
@@ -199,7 +199,7 @@ module.exports = {
                 attributes: { exclude: ['createdAt', 'updatedAt'] },
                 include: [
                     {
-                        model:items,
+                        model: items,
                         attributes: {
                             exclude: ['createdAt', 'updatedAt']
                         },
@@ -226,7 +226,6 @@ module.exports = {
                 message: 'Internal Server Error',
             });
         }
-
     }
 
 }
