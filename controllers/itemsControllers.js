@@ -451,7 +451,9 @@ module.exports = {
 
     getAllItem: async (req, res) => {
         try{
-            const allItem = await items.findAll()
+            const allItem = await items.findAll({
+                attributes: { exclude: ['createdAt', 'updatedAt'] }
+            });
 
             if (!allItem) {
                 return res.status(400).json({
