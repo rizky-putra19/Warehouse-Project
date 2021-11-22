@@ -21,6 +21,9 @@
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rizky-putra19/Warehouse-Project.git/issues"
+  },
   "dependencies": {
     "@joi/date": "^2.1.0",
     "bcrypt": "^5.0.1",
