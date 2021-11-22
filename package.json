@@ -15,7 +15,10 @@
     "db:seed:make": "sequelize-cli seed:generate --name",
     "heroku-release": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rizky-putra19/Warehouse-Project.git"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
